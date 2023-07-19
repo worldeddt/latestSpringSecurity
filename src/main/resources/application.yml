@@ -1,0 +1,9 @@
+server:
+  port: 8090
+
+
+jwt:
+  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+
+
+
