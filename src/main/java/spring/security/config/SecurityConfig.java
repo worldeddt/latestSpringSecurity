@@ -15,11 +15,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import spring.security.filter.JwtAuthenticationFilter;
 import spring.security.provider.JwtTokenProvider;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
@@ -29,13 +31,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
-            .requestMatchers("/members/login/").permitAll()
-            .requestMatchers("/members/test").hasRole("USER")
-            .anyRequest().authenticated()
-            .and()
-            .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
-                    UsernamePasswordAuthenticationFilter.class);
+                .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/members/login/").permitAll()
+                        .requestMatchers("/members/test/").hasRole("USER")
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class)
+                .httpBasic(withDefaults());
         return http.build();
     }
 
