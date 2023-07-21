@@ -3,7 +3,27 @@ server:
 
 
 jwt:
-  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+#  secret: "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa"
+  secret: "ZN4fD97CEUkyNMgFJ2sIRAbJomg3zGZmsdpRtxEVn5OAcaALkVB5hHR53DLJUaUW"
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    url: 'jdbc:mariadb://localhost:3308/prototype'
+    password: eddy
+  jpa:
+    hibernate:
+      ddl-auto : create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate:
+        use_sql_comments: true
+        format_sql: true
+
 
 
 

@@ -1,6 +1,7 @@
 package spring.security.provider;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.WeakKeyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,10 +13,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import spring.security.dto.TokenInfo;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+
+import javax.crypto.SecretKey;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -27,8 +31,9 @@ public class JwtTokenProvider {
 
     private final Key key;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) throws WeakKeyException {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        log.info("secretKey :"+secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
