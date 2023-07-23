@@ -1,7 +1,11 @@
 server:
   port: 8090
 
-
+security:
+  user:
+    name: admin
+    password: admin
+    role: USER
 jwt:
 #  secret: "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa"
   secret: "ZN4fD97CEUkyNMgFJ2sIRAbJomg3zGZmsdpRtxEVn5OAcaALkVB5hHR53DLJUaUW"
@@ -14,7 +18,7 @@ spring:
     password: eddy
   jpa:
     hibernate:
-      ddl-auto : create
+      ddl-auto : none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true

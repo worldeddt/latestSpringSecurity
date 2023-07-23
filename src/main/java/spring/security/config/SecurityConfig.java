@@ -30,11 +30,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/members/login/").permitAll()
-                        .requestMatchers("/members/test/").hasRole("USER")
+                        .requestMatchers("/member/v1/login/").permitAll()
+                        .requestMatchers("/member/v1/health/").hasRole("USER")
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                .addFilterBefore(new JwtAuthenticationFilter(this.jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(withDefaults());
         return http.build();
