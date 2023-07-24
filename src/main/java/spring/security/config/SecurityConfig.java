@@ -1,19 +1,15 @@
 package spring.security.config;
 
-import jakarta.annotation.PostConstruct;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.RequestMethod;
 import spring.security.filter.JwtAuthenticationFilter;
 import spring.security.provider.JwtTokenProvider;
 
@@ -29,9 +25,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()
+            .httpBasic().disable();
+
+        http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/member/v1/login/").permitAll()
-                        .requestMatchers("/member/v1/health/").hasRole("USER")
+                        .requestMatchers("/member/v1/health", "/member/v1/login", "/member/v1/test").permitAll()
+                        .requestMatchers("/member/v1/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(this.jwtTokenProvider),
