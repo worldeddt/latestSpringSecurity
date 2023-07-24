@@ -7,8 +7,8 @@ security:
     password: admin
     role: USER
 jwt:
-#  secret: "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa"
-  secret: "ZN4fD97CEUkyNMgFJ2sIRAbJomg3zGZmsdpRtxEVn5OAcaALkVB5hHR53DLJUaUW"
+  secret: "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa"
+#  secret: "ZN4fD97CEUkyNMgFJ2sIRAbJomg3zGZmsdpRtxEVn5OAcaALkVB5hHR53DLJUaUW"
 
 spring:
   datasource:

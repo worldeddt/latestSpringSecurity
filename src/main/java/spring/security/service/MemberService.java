@@ -6,9 +6,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import spring.security.domain.Member;
 import spring.security.dto.TokenInfo;
 import spring.security.provider.JwtTokenProvider;
 import spring.security.repository.MemberRepository;
+import spring.security.vo.MemberVo;
+
+import java.util.Optional;
 
 @Service
 @Transactional()
@@ -31,5 +35,18 @@ public class MemberService {
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         return jwtTokenProvider.generateToken(authentication);
+    }
+
+    public MemberVo findUser(String memberId)
+    {
+        Optional<Member> member = memberRepository.findByMemberId(memberId);
+        Member member1 = member.orElseGet(Member::new);
+
+        MemberVo memberVo = new MemberVo();
+
+        memberVo.setMemberId(member1.getMemberId());
+        memberVo.setPassword(member1.getPassword());
+
+        return memberVo;
     }
 }
