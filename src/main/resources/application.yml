@@ -1,6 +1,20 @@
 server:
   port: 8090
 
+management:
+  trace :
+    http:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+#        include: health,info,beans,conditions,heapdump,threaddump,httptrace
+        include: "*"
+        exclude:
+
 security:
   user:
     name: admin

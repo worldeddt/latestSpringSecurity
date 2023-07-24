@@ -32,7 +32,8 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/member/v1/health", "/member/v1/login", "/member/v1/test").permitAll()
+                        .requestMatchers("/member/v1/health", "/member/v1/login",
+                                "/actuator/**","/member/v1/test").permitAll()
                         .requestMatchers("/member/v1/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
