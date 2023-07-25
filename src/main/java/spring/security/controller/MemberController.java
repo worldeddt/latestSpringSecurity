@@ -3,6 +3,7 @@ package spring.security.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import spring.security.dto.MemberLoginRequestDto;
 import spring.security.dto.TokenInfo;
@@ -41,5 +42,10 @@ public class MemberController {
     @PostMapping(value = "/login/{userId}")
     public MemberVo findUser(@PathVariable("userId") String userId) {
         return memberService.findUser(userId);
+    }
+
+    @PutMapping(value = "${management.endpoints.web.path-mapping.health:health}/up")
+    public String puttest() {
+        return "active";
     }
 }

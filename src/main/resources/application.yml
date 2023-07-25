@@ -8,8 +8,22 @@ management:
   endpoint:
     health:
       show-details: always
+  health:
+    status:
+      http-mapping:
+        UP: '200'
+        MAINTENANCE: '503'
+        DOWN: '503'
+        UNKNOWN: '200'
+      order: DOWN, MAINTENANCE, UNKOWN, UP
   endpoints:
     web:
+      cors:
+        allowed-methods: GET,POST,PUT
+        allowed-origins: "*"
+      base-path: /monitor
+      path-mapping:
+        health: healthcheck
       exposure:
 #        include: health,info,beans,conditions,heapdump,threaddump,httptrace
         include: "*"
